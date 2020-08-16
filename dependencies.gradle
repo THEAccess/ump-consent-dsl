@@ -1,0 +1,42 @@
+ext {
+    config = [
+            versionCode: 1,
+            versionName: "1.0.0",
+    ]
+
+    versions = [
+            compileSdk  : 29,
+            gradlePlugin: '4.0.1',
+            jetpack     : "1.1.0",
+            kotlin      : "1.3.72",
+            minSdk      : 21,
+            targetSdk   : 29,
+            googleUmp   : "1.0.0",
+            junit       : "4.13",
+            mockk       : "1.9.3",
+            testRunner  : "1.2.0",
+            espressoCore: "3.2.0",
+            coroutines  : "1.3.8",
+    ]
+
+    libraries = [
+            kotlinStdlb: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
+            appcompat  : "androidx.appcompat:appcompat:${versions.appcompat}",
+            coreKtx    : "androidx.core:core-ktx:${versions.coreKtx}",
+            googleUmp  : "com.google.android.ump:user-messaging-platform:${versions.googleUmp}",
+            coroutines:  "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
+    ]
+
+    testLibraries = [
+            junit         : "junit:junit:${versions.junit}",
+            mockk         : "io.mockk:mockk:${versions.mockk}",
+            coroutinesTest: "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutines}"
+    ]
+
+    androidTestLibraries = [
+            testRunner  : "androidx.test.runner:${versions.testRunner}",
+            androidJunit: "androidx.test.ext:junit:1.1.1",
+            espressoCore: "androidx.test.espresso:espresso-core:${versions.espressoCore}",
+    ]
+
+}
