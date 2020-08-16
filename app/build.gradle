@@ -37,6 +37,9 @@ dependencies {
     implementation(
             libraries.kotlinStdlb,
             libraries.googleUmp,
+            libraries.appcompat,
+            libraries.coreKtx,
+            libraries.lifecycle,
             libraries.coroutines
     )
 
