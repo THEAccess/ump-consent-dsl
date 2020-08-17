@@ -7,10 +7,7 @@ import com.luminarlab.consent.extensions.loadConsentForm
 import com.luminarlab.consent.extensions.requestConsentInfoUpdate
 import com.luminarlab.consent.extensions.show
 import com.luminarlab.consent.internal.toParams
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class UmpConsentDelegate internal constructor(
     private val activity: Activity,
@@ -23,18 +20,18 @@ class UmpConsentDelegate internal constructor(
         }
     }
     private val consentForm: Deferred<ConsentForm?> =
-        GlobalScope.async {
+        GlobalScope.async(Dispatchers.Main) {
             if (consentInfo.await().isConsentFormAvailable) loadConsentForm(
                 activity
             ) else null
         }
 
 
-    suspend fun showIfRequired() = GlobalScope.launch {
+    suspend fun showIfRequired()  {
 
         options.intercept.invoke(consentInfo.await())
 
-        if (options.showIfCondition(consentInfo.await())) {
+        if (options.showCondition(consentInfo.await())) {
             consentForm.await()?.show(activity)
         }
     }

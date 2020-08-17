@@ -3,7 +3,6 @@ package com.luminarlab.consent.dsl
 import android.util.Log
 import com.google.android.ump.ConsentDebugSettings
 import com.google.android.ump.ConsentInformation
-import com.google.android.ump.ConsentRequestParameters
 
 /**
  * Von Yannick Knoll am 2020-08-16 erstellt.
@@ -15,14 +14,25 @@ class ConsentOptions {
     var tagForUnderageOfConsent: Boolean? = null
     var consentDebugSettings: ConsentDebugSettings? = null
     var admobId: String? = null
-    var showIfCondition = { consentInfo: ConsentInformation ->
+    internal var showCondition = { consentInfo: ConsentInformation ->
         consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED || consentInfo.consentStatus == ConsentInformation.ConsentStatus.UNKNOWN
     }
-    var intercept = { consentInfo: ConsentInformation ->
+    private set
+
+    fun showIf(condition: (ConsentInformation) -> Boolean) {
+        showCondition = condition
+    }
+
+    internal var intercept: (ConsentInformation) -> Unit = { consentInfo: ConsentInformation ->
         Log.d(
             "Consent",
             "FormAvailable: ${consentInfo.isConsentFormAvailable} | Status: ${consentInfo.consentStatus}"
         )
+    }
+    private set
+
+    fun intercept(interceptor: (ConsentInformation) -> Unit) {
+        intercept = interceptor
     }
 
 

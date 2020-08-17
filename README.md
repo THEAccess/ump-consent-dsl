@@ -1,15 +1,4 @@
-# UMP Simple DSL
-A DSL and Kotlin extensions for [User Messaging Platform](https://developers.google.com/admob/ump/android/quick-start) 
 
-This library simplifies common steps when using UMP by Admob:
-
-  - Automatically load consent information and consent form
-  - Setup and show form via dsl
-  - Coroutine extensions for common functions
-
-### Quick Start
-
-Don't forget to add `com.google.android.gms.ads.APPLICATION_ID` to your `AndroidManifest.xml`
 ´´´
 # UMP Simple DSL
 A DSL and Kotlin extensions for [User Messaging Platform](https://developers.google.com/admob/ump/android/quick-start) 
