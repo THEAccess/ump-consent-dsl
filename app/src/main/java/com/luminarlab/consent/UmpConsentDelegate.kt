@@ -5,9 +5,11 @@ import com.google.android.ump.*
 import com.luminarlab.consent.dsl.ConsentOptions
 import com.luminarlab.consent.extensions.loadConsentForm
 import com.luminarlab.consent.extensions.requestConsentInfoUpdate
+import com.luminarlab.consent.extensions.retry
 import com.luminarlab.consent.extensions.show
 import com.luminarlab.consent.internal.toParams
 import kotlinx.coroutines.*
+import java.lang.Exception
 
 class UmpConsentDelegate internal constructor(
     private val activity: Activity,
@@ -15,12 +17,15 @@ class UmpConsentDelegate internal constructor(
 ) {
 
     private val consentInfo = GlobalScope.async {
-        UserMessagingPlatform.getConsentInformation(activity).apply {
-            requestConsentInfoUpdate(activity, options.toParams())
+        retry(30_000L) {
+            UserMessagingPlatform.getConsentInformation(activity).apply {
+                requestConsentInfoUpdate(activity, options.toParams())
+            }
         }
     }
     private val consentForm: Deferred<ConsentForm?> =
         GlobalScope.async(Dispatchers.Main) {
+
             if (consentInfo.await().isConsentFormAvailable) loadConsentForm(
                 activity
             ) else null
